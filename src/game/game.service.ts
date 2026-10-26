@@ -1,0 +1,59 @@
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { isValidObjectId, Model } from 'mongoose';
+import { Game } from './game.schema';
+
+// The fields shown in game lists, so we do not send every move and chat line
+const SUMMARY_FIELDS = 'white black status result timeControl opening moves';
+
+@Injectable()
+export class GameService {
+  constructor(@InjectModel(Game.name) private gameModel: Model<Game>) {}
+
+  getLive() {
+    return this.gameModel
+      .find({ status: 'live' })
+      .select(SUMMARY_FIELDS)
+      .sort({ watching: -1 })
+      .lean()
+      .exec();
+  }
+
+  countLive() {
+    return this.gameModel.countDocuments({ status: 'live' }).exec();
+  }
+
+  // The live game with the most people watching
+  async getFeatured() {
+    const game = await this.gameModel
+      .findOne({ status: 'live' })
+      .sort({ watching: -1 })
+      .lean()
+      .exec();
+    if (!game) throw new NotFoundException('No live games right now');
+    return game;
+  }
+
+  async getById(id: string) {
+    // Stops Mongoose from throwing a confusing error for ids like "abc"
+    if (!isValidObjectId(id)) throw new NotFoundException('Game not found');
+    const game = await this.gameModel.findById(id).lean().exec();
+    if (!game) throw new NotFoundException('Game not found');
+    return game;
+  }
+
+  // Finished games where this player had white or black, newest first
+  getFinishedByPlayer(username: string, limit: number) {
+    const name = username.toLowerCase();
+    return this.gameModel
+      .find({
+        status: 'finished',
+        $or: [{ 'white.username': name }, { 'black.username': name }],
+      })
+      .select(SUMMARY_FIELDS)
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean()
+      .exec();
+  }
+}
