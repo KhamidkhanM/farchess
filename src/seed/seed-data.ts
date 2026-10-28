@@ -186,6 +186,14 @@ const nextSaturday = () => {
   return date;
 };
 
+// A few days from now at a Tashkent hour (Tashkent is UTC+5)
+const inDays = (days: number, tashkentHour: number) => {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() + days);
+  date.setUTCHours(tashkentHour - 5, 0, 0, 0);
+  return date;
+};
+
 export const tournaments = [
   {
     name: 'farchess Weekend Arena',
@@ -195,5 +203,41 @@ export const tournaments = [
     format: 'Swiss',
     joined: 64,
     capacity: 128,
+  },
+  {
+    name: 'Evening Bullet Blitz',
+    startsAt: inDays(1, 20),
+    timeControl: '1+0',
+    rounds: 9,
+    format: 'Arena',
+    joined: 37,
+    capacity: 100,
+  },
+  {
+    name: 'Tashkent Rapid Open',
+    startsAt: inDays(3, 15),
+    timeControl: '15+10',
+    rounds: 5,
+    format: 'Swiss',
+    joined: 22,
+    capacity: 32,
+  },
+  {
+    name: 'Beginners Cup (under 1600)',
+    startsAt: inDays(4, 18),
+    timeControl: '10+0',
+    rounds: 5,
+    format: 'Swiss',
+    joined: 15,
+    capacity: 16,
+  },
+  {
+    name: 'Sunday Classical',
+    startsAt: inDays(9, 11),
+    timeControl: '30+0',
+    rounds: 4,
+    format: 'Swiss',
+    joined: 8,
+    capacity: 24,
   },
 ];

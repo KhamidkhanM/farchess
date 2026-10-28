@@ -53,7 +53,7 @@ async function seed() {
   await tournamentModel.insertMany(tournaments);
 
   console.log(
-    `Seeded ${members.length} members, ${liveGames.length + finishedGames.length} games and ${tournaments.length} tournament.`,
+    `Seeded ${members.length} members, ${liveGames.length + finishedGames.length} games and ${tournaments.length} tournaments.`,
   );
   await app.close();
 }
