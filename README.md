@@ -27,6 +27,11 @@ npm run start:dev  # API on http://localhost:4000
 | GET | `/games/live` | Games being played right now |
 | GET | `/games/featured` | The live game with the most people watching |
 | GET | `/games/:id` | One game with its moves, position and chat |
+| POST | `/games` | Opens a new game. Body: `{ "username": "khamid", "timeControl": "3+2", "color": "white" }` (color can be white, black or random) |
+| POST | `/games/:id/join` | Takes the free seat and starts the clocks. Body: `{ "username": "opponent" }` |
+| POST | `/games/:id/move` | Plays a move. Body: `{ "username": "khamid", "move": "e4" }` |
+| POST | `/games/:id/resign` | Resigns (or cancels a game nobody joined yet). Body: `{ "username": "khamid" }` |
+| POST | `/games/:id/draw` | Offers a draw, or accepts the other player's offer. Body: `{ "username": "khamid" }` |
 | POST | `/games/:id/chat` | Adds a chat message. Body: `{ "from": "khamid", "text": "gg" }` |
 | GET | `/lobby` | Online count, live game count, time controls and the next tournament |
 | GET | `/tournaments` | Tournaments that have not started yet, soonest first |
