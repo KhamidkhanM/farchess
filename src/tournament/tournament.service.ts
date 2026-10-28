@@ -42,7 +42,7 @@ export class TournamentService {
 
     // Nothing changed: find out why, so the page can say so
     const existing = await this.getById(id);
-    if (existing.players.includes(name)) return existing;
+    if (existing.players?.includes(name)) return existing;
     throw new BadRequestException('This tournament is full');
   }
 

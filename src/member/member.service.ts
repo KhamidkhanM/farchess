@@ -41,7 +41,7 @@ export class MemberService {
   async getFriends(username: string) {
     const member = await this.getByUsername(username);
     return this.memberModel
-      .find({ username: { $in: member.friends } })
+      .find({ username: { $in: member.friends ?? [] } })
       .select(LIST_FIELDS)
       .sort({ username: 1 })
       .lean()
