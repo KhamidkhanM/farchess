@@ -34,4 +34,10 @@ describe('GameService', () => {
       service.getById('6650f0a1b2c3d4e5f6a7b8c9'),
     ).rejects.toBeInstanceOf(NotFoundException);
   });
+
+  it('asks for text when the chat message is empty', async () => {
+    await expect(
+      service.addChat('6650f0a1b2c3d4e5f6a7b8c9', 'khamid', '  '),
+    ).rejects.toThrow('Send who wrote it');
+  });
 });

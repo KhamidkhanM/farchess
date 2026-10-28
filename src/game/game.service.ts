@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { Game } from './game.schema';
@@ -55,5 +59,35 @@ export class GameService {
       .limit(limit)
       .lean()
       .exec();
+  }
+
+  // Adds a chat message and returns the whole chat
+  async addChat(id: string, from: unknown, text: unknown) {
+    if (!isValidObjectId(id)) throw new NotFoundException('Game not found');
+    if (typeof from !== 'string' || typeof text !== 'string' || !text.trim()) {
+      throw new BadRequestException(
+        'Send who wrote it and the text, like { "from": "khamid", "text": "gg" }',
+      );
+    }
+    const game = await this.gameModel
+      .findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            // $slice keeps only the newest 100 messages
+            chat: {
+              $each: [
+                { from: from.toLowerCase(), text: text.trim().slice(0, 300) },
+              ],
+              $slice: -100,
+            },
+          },
+        },
+        { new: true },
+      )
+      .lean()
+      .exec();
+    if (!game) throw new NotFoundException('Game not found');
+    return game.chat;
   }
 }

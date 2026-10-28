@@ -1,9 +1,11 @@
 import {
+  Body,
   Controller,
   DefaultValuePipe,
   Get,
   Param,
   ParseIntPipe,
+  Post,
   Query,
 } from '@nestjs/common';
 import { GameService } from './game.service';
@@ -40,5 +42,15 @@ export class GameController {
   @Get(':id')
   getById(@Param('id') id: string) {
     return this.gameService.getById(id);
+  }
+
+  // POST /games/6650f0.../chat with { "from": "khamid", "text": "gg" }
+  @Post(':id/chat')
+  addChat(
+    @Param('id') id: string,
+    @Body('from') from: string,
+    @Body('text') text: string,
+  ) {
+    return this.gameService.addChat(id, from, text);
   }
 }
