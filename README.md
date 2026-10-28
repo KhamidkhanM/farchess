@@ -18,7 +18,11 @@ npm run start:dev  # API on http://localhost:4000
 
 | Method | Path | What it returns |
 | --- | --- | --- |
+| GET | `/members?search=:text` | Up to 20 players whose username contains the text |
 | GET | `/members/:username` | A player's profile, ratings, rating history and coach tip |
+| GET | `/members/:username/friends` | The players this member added as friends |
+| POST | `/members/:username/friends` | Adds a friend. Body: `{ "friend": "opponent" }` |
+| DELETE | `/members/:username/friends/:friend` | Removes a friend |
 | GET | `/games?player=:username&limit=5` | A player's finished games, newest first |
 | GET | `/games/live` | Games being played right now |
 | GET | `/games/featured` | The live game with the most people watching |

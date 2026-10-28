@@ -58,6 +58,10 @@ export class Member {
   @Prop({ type: CoachTip })
   coachTip?: CoachTip;
 
+  // Usernames of the players this member added as friends
+  @Prop({ type: [String], default: [] })
+  friends: string[];
+
   createdAt: Date;
 }
 
