@@ -1,12 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type GameStatus = 'live' | 'finished';
+// waiting = created, but nobody has taken the other seat yet
+export type GameStatus = 'waiting' | 'live' | 'finished';
 export type GameResult = '1-0' | '0-1' | '1/2-1/2';
 
 @Schema({ _id: false })
 export class GamePlayer {
-  @Prop({ required: true, lowercase: true, trim: true })
+  // Empty while the seat is still free
+  @Prop({ default: '', lowercase: true, trim: true })
   username: string;
 
   // Rating when the game started
@@ -39,7 +41,11 @@ export class Game {
   @Prop({ type: GamePlayer, required: true })
   black: GamePlayer;
 
-  @Prop({ required: true, enum: ['live', 'finished'], default: 'live' })
+  @Prop({
+    required: true,
+    enum: ['waiting', 'live', 'finished'],
+    default: 'live',
+  })
   status: GameStatus;
 
   // Only set once the game is finished
@@ -77,6 +83,19 @@ export class Game {
 
   @Prop({ type: [ChatMessage], default: [] })
   chat: ChatMessage[];
+
+  // When the player to move started thinking. Their clock runs from here.
+  // Sample games have none, so their clocks stand still.
+  @Prop()
+  turnStartedAt?: Date;
+
+  // Username of the player offering a draw, or empty
+  @Prop({ default: '' })
+  drawOffer: string;
+
+  // Why the game ended, like "checkmate" or "resignation"
+  @Prop({ default: '' })
+  endReason: string;
 }
 
 export type GameDocument = HydratedDocument<Game>;
