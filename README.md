@@ -27,6 +27,8 @@ npm run start:dev  # API on http://localhost:4000
 | GET | `/tournaments` | Tournaments that have not started yet, soonest first |
 | POST | `/tournaments/:id/join` | Joins a tournament. Body: `{ "username": "khamid" }` |
 | POST | `/tournaments/:id/leave` | Leaves a tournament. Body: `{ "username": "khamid" }` |
+| GET | `/puzzles` | Every puzzle with its position and answer, easiest first |
+| POST | `/puzzles/:id/result` | Moves the player's puzzle rating up or down. Body: `{ "username": "khamid", "solved": true }` |
 
 ## Tests
 
