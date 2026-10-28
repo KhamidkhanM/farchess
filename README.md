@@ -10,7 +10,7 @@ The backend for farchess, built with NestJS and MongoDB (Mongoose).
 
 ```bash
 npm install
-npm run seed       # deletes and re-creates the sample members, games and tournament
+npm run seed       # deletes and re-creates the sample members, games, tournaments and puzzles
 npm run start:dev  # API on http://localhost:4000
 ```
 

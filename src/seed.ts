@@ -1,5 +1,5 @@
 // Fills the database with sample data: `npm run seed`
-// Careful: it deletes the members, games and tournaments that are already there.
+// Careful: it deletes the members, games, tournaments and puzzles that are already there.
 import { NestFactory } from '@nestjs/core';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -8,10 +8,12 @@ import { AppModule } from './app.module';
 import { Member } from './member/member.schema';
 import { Game } from './game/game.schema';
 import { Tournament } from './tournament/tournament.schema';
+import { Puzzle } from './puzzle/puzzle.schema';
 import {
   finishedGames,
   liveGames,
   members,
+  puzzles,
   tournaments,
 } from './seed/seed-data';
 
@@ -36,11 +38,13 @@ async function seed() {
   const tournamentModel = app.get<Model<Tournament>>(
     getModelToken(Tournament.name),
   );
+  const puzzleModel = app.get<Model<Puzzle>>(getModelToken(Puzzle.name));
 
   await Promise.all([
     memberModel.deleteMany({}),
     gameModel.deleteMany({}),
     tournamentModel.deleteMany({}),
+    puzzleModel.deleteMany({}),
   ]);
 
   await memberModel.insertMany(members);
@@ -51,9 +55,10 @@ async function seed() {
     ),
   ]);
   await tournamentModel.insertMany(tournaments);
+  await puzzleModel.insertMany(puzzles);
 
   console.log(
-    `Seeded ${members.length} members, ${liveGames.length + finishedGames.length} games and ${tournaments.length} tournaments.`,
+    `Seeded ${members.length} members, ${liveGames.length + finishedGames.length} games, ${tournaments.length} tournaments and ${puzzles.length} puzzles.`,
   );
   await app.close();
 }

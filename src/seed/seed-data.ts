@@ -241,3 +241,56 @@ export const tournaments = [
     capacity: 24,
   },
 ];
+
+// The side to move in each FEN solves the puzzle. seed-data.spec.ts checks every answer is legal.
+export const puzzles = [
+  {
+    title: 'Fool’s mate',
+    fen: 'rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2',
+    solution: ['Qh4#'],
+    rating: 600,
+    theme: 'mate in 1',
+  },
+  {
+    title: 'Scholar’s mate',
+    fen: 'r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4',
+    solution: ['Qxf7#'],
+    rating: 700,
+    theme: 'mate in 1',
+  },
+  {
+    title: 'Back-rank mate',
+    fen: '6k1/5ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1',
+    solution: ['Rd8#'],
+    rating: 800,
+    theme: 'mate in 1',
+  },
+  {
+    title: 'Win the queen with a skewer',
+    fen: '8/8/3k3q/8/8/8/8/R5K1 w - - 0 1',
+    solution: ['Ra6+', 'Ke7', 'Rxh6'],
+    rating: 1000,
+    theme: 'skewer',
+  },
+  {
+    title: 'Royal fork',
+    fen: 'q3k3/8/8/3N4/8/8/8/4K3 w - - 0 1',
+    solution: ['Nc7+', 'Kd7', 'Nxa8'],
+    rating: 1100,
+    theme: 'fork',
+  },
+  {
+    title: 'Rook ladder',
+    fen: '7k/8/8/8/8/8/8/RR4K1 w - - 0 1',
+    solution: ['Rb7', 'Kg8', 'Ra8#'],
+    rating: 1200,
+    theme: 'mate in 2',
+  },
+  {
+    title: 'Smothered mate',
+    fen: 'r6k/6pp/7N/3Q4/8/8/8/6K1 w - - 0 1',
+    solution: ['Qg8+', 'Rxg8', 'Nf7#'],
+    rating: 1400,
+    theme: 'mate in 2',
+  },
+];
