@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { MemberModule } from './member/member.module';
 import { GameModule } from './game/game.module';
 import { LobbyModule } from './lobby/lobby.module';
+import { TournamentModule } from './tournament/tournament.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { LobbyModule } from './lobby/lobby.module';
     MemberModule,
     GameModule,
     LobbyModule,
+    TournamentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -24,6 +24,11 @@ export class Tournament {
 
   @Prop({ required: true })
   capacity: number;
+
+  // Usernames of the members who joined on farchess. "joined" also counts
+  // players from the sample data, so it can be bigger than this list.
+  @Prop({ type: [String], default: [] })
+  players: string[];
 }
 
 export type TournamentDocument = HydratedDocument<Tournament>;

@@ -24,6 +24,9 @@ npm run start:dev  # API on http://localhost:4000
 | GET | `/games/featured` | The live game with the most people watching |
 | GET | `/games/:id` | One game with its moves, position and chat |
 | GET | `/lobby` | Online count, live game count, time controls and the next tournament |
+| GET | `/tournaments` | Tournaments that have not started yet, soonest first |
+| POST | `/tournaments/:id/join` | Joins a tournament. Body: `{ "username": "khamid" }` |
+| POST | `/tournaments/:id/leave` | Leaves a tournament. Body: `{ "username": "khamid" }` |
 
 ## Tests
 
