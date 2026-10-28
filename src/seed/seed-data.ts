@@ -40,6 +40,7 @@ export const members = [
       text: 'In 7 of your 11 losses you were equal or better at move 30. Most slips came in king-and-pawn endings where your king stayed back too long.',
       action: 'Practice 10 endgames',
     },
+    friends: ['opponent', 'player_three', 'player_five'],
   },
   player('opponent', 1638),
   player('player_one', 2214),
