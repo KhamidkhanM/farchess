@@ -25,6 +25,7 @@ npm run start:dev  # API on http://localhost:4000
 | DELETE | `/members/:username/friends/:friend` | Removes a friend |
 | GET | `/games?player=:username&limit=5` | A player's finished games, newest first |
 | GET | `/games/live` | Games being played right now |
+| GET | `/games/open?timeControl=3%2B2` | Games waiting for a second player, oldest first |
 | GET | `/games/featured` | The live game with the most people watching |
 | GET | `/games/:id` | One game with its moves, position and chat |
 | POST | `/games` | Opens a new game. Body: `{ "username": "khamid", "timeControl": "3+2", "color": "white" }` (color can be white, black or random) |

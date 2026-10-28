@@ -23,6 +23,17 @@ export class GameService {
       .exec();
   }
 
+  // Games waiting for a second player, oldest first, so the lobby can pair people
+  getOpen(timeControl?: string) {
+    return this.gameModel
+      .find({ status: 'waiting', ...(timeControl ? { timeControl } : {}) })
+      .select(SUMMARY_FIELDS)
+      .sort({ createdAt: 1 })
+      .limit(20)
+      .lean()
+      .exec();
+  }
+
   countLive() {
     return this.gameModel.countDocuments({ status: 'live' }).exec();
   }

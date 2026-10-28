@@ -36,6 +36,12 @@ export class GameController {
     return this.gameService.getLive();
   }
 
+  // GET /games/open?timeControl=3%2B2 → games waiting for a second player
+  @Get('open')
+  getOpen(@Query('timeControl') timeControl?: string) {
+    return this.gameService.getOpen(timeControl);
+  }
+
   // GET /games/featured
   @Get('featured')
   getFeatured() {
